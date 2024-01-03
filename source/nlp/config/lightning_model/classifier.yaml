@@ -1,0 +1,18 @@
+_target_: nlp.lightning_model.classifier.Classifier
+
+
+num_classes: ${datamodule.num_classes}
+
+
+model: 
+  _target_: nlp.models.net.Net
+  in_dims: ${datamodule.embedding_dim}
+  out_dims: ${datamodule.num_classes}
+
+optimizer:
+  _target_: torch.optim.Adam
+  lr: 0.001
+  weight_decay: 0.0
+
+# compile model for faster training with pytorch 2.0
+compile: false

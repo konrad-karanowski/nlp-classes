@@ -1,0 +1,5 @@
+_target_: nlp.models.flows.cmaf.cMAF
+
+hidden_features: ${datamodule.num_classes}
+features: ${datamodule.num_classes}
+context_features: ${datamodule.embedding_dim}

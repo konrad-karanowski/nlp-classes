@@ -1,7 +1,7 @@
 # this is "project metadata"
 
-project_name: example_project
-tags: ['tag1', 'tag2', 'tag3']
+project_name: nlp_normalizing_flows
+tags: ['test']
 group: 'my_group'
 version: 1.0
 

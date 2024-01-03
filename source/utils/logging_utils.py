@@ -31,7 +31,7 @@ def log_hyperparameters(object_dict: Dict[str, Any]) -> None:
         logger.warning("Logger not found! Skipping hyperparameter logging...")
         return
 
-    hparams["model"] = config["model"]
+    hparams["model"] = config.get("model")
 
     # save number of model parameters
     hparams["model/params/total"] = sum(p.numel() for p in model.parameters())

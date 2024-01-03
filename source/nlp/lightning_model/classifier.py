@@ -10,7 +10,7 @@ from torchmetrics import MaxMetric, MeanMetric
 from torchmetrics.classification.accuracy import Accuracy
 
 
-class MNISTLitModule(pl.LightningModule):
+class Classifier(pl.LightningModule):
     """Example of a `LightningModule` for MNIST classification.
 
     A `LightningModule` implements 8 key methods:
@@ -55,7 +55,7 @@ class MNISTLitModule(pl.LightningModule):
             compile (Optional[bool], optional). Whether to compile the model. Defaults to False.
             *args, **kwargs: Hyperaparameters for the model. Saved by `self.save_hyperparameters()`
         """
-        super().__init__()
+        super(Classifier, self).__init__()
 
         # this line allows to access init params with 'self.hparams' attribute
         # also ensures init params will be stored in ckpt
@@ -67,9 +67,9 @@ class MNISTLitModule(pl.LightningModule):
         self.criterion = torch.nn.CrossEntropyLoss()
 
         # metric objects for calculating and averaging accuracy across batches
-        self.train_acc = Accuracy(task="multiclass", num_classes=10)
-        self.val_acc = Accuracy(task="multiclass", num_classes=10)
-        self.test_acc = Accuracy(task="multiclass", num_classes=10)
+        self.train_acc = Accuracy(task="multiclass", num_classes=self.hparams.num_classes)
+        self.val_acc = Accuracy(task="multiclass", num_classes=self.hparams.num_classes)
+        self.test_acc = Accuracy(task="multiclass", num_classes=self.hparams.num_classes)
 
         # for averaging loss across batches
         self.train_loss = MeanMetric()
@@ -140,7 +140,7 @@ class MNISTLitModule(pl.LightningModule):
             - A tensor of predictions.
             - A tensor of target labels.
         """
-        x, y = batch
+        x, y = batch['x'], batch['y']
         logits = self.forward(x)
         loss = self.criterion(logits, y)
         preds = torch.argmax(logits, dim=1)

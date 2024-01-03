@@ -25,13 +25,12 @@ defaults:
   # ===================================================================================
   # DATASET - dataset related config
   # ===================================================================================
-  - datamodule: mnist
+  - datamodule: herbert
 
   # ===================================================================================
   # MODEL - model related configs
   # ===================================================================================
-  - model: mnist
-  - lightning_model: mnist
+  - lightning_model: classifier
 
   # ===================================================================================
   # training related
@@ -53,7 +52,7 @@ defaults:
   - debug: null
 
 # task name, determines output directory path
-task_name: "train"
+task_name: "train_classifier"
 
 # for checkpoint, if we want to reasume the training
 checkpoint_path: null
