@@ -1,0 +1,13 @@
+_target_: nlp.lightning_model.flow_augmentation_model.FlowAugmentationModel
+
+num_classes: ${datamodule.num_classes}
+
+flow: ${flow_model}
+
+optimizer:
+  _target_: torch.optim.Adam
+  lr: 0.001
+  weight_decay: 0.0
+
+# compile model for faster training with pytorch 2.0
+compile: false

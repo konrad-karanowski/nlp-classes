@@ -82,7 +82,7 @@ def train(config: DictConfig) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     return metric_dict, object_dict
 
 
-@hydra.main(config_path=os.environ["CONFIG_DIR"], config_name="flow_uncert")
+@hydra.main(config_path=os.environ["CONFIG_DIR"], config_name="flow_uncertainty")
 def main(config: DictConfig) -> Optional[float]:
     """Main entry point for training.
 

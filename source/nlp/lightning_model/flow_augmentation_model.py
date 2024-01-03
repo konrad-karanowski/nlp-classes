@@ -10,7 +10,7 @@ from torchmetrics import MaxMetric, MeanMetric
 from torchmetrics.classification.accuracy import Accuracy
 
 
-class FlowModel(pl.LightningModule):
+class FlowAugmentationModel(pl.LightningModule):
 
 
     def __init__(
@@ -19,7 +19,7 @@ class FlowModel(pl.LightningModule):
         *args,
         **kwargs
     ) -> None:
-        super(FlowModel, self).__init__()
+        super(FlowAugmentationModel, self).__init__()
 
         # this line allows to access init params with 'self.hparams' attribute
         # also ensures init params will be stored in ckpt
@@ -59,8 +59,7 @@ class FlowModel(pl.LightningModule):
         self, batch: Tuple[torch.Tensor, torch.Tensor]
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         x, y = batch['x'], batch['y']
-        y = torch.nn.functional.one_hot(y, self.hparams.num_classes).float()
-        loss = - self.flow.log_prob(inputs=y, context=x).mean()
+        loss = - self.flow.log_prob(inputs=x.float(), context=y).mean()
         return loss
 
 
@@ -92,11 +91,6 @@ class FlowModel(pl.LightningModule):
 
         # return loss or backpropagation will fail
         return loss
-
-    def setup(self, stage: str) -> None:
-        if self.hparams.compile and stage == "fit":
-            self.flow = torch.compile(self.flow)
-
 
 
 @hydra.main(config_path=os.environ["CONFIG_DIR"], config_name="default")
