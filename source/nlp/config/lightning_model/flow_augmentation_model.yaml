@@ -2,7 +2,7 @@ _target_: nlp.lightning_model.flow_augmentation_model.FlowAugmentationModel
 
 num_classes: ${datamodule.num_classes}
 
-flow: ${flow_model}
+flow: ${flow_augmentation_model}
 
 optimizer:
   _target_: torch.optim.Adam

@@ -31,16 +31,26 @@ def log_hyperparameters(object_dict: Dict[str, Any]) -> None:
         logger.warning("Logger not found! Skipping hyperparameter logging...")
         return
 
+    # log models
     hparams["model"] = config.get("model")
+    
+    if 'flow_model' in config.keys():
+        hparams['flow'] = config.get('flow_model')
+    elif 'flow_augmentation_model' in config.keys():
+        hparams["flow"] = config.get("flow_augmentation_model")
 
+
+    # log lightning model
     # save number of model parameters
-    hparams["model/params/total"] = sum(p.numel() for p in model.parameters())
-    hparams["model/params/trainable"] = sum(
-        p.numel() for p in model.parameters() if p.requires_grad
-    )
-    hparams["model/params/non_trainable"] = sum(
-        p.numel() for p in model.parameters() if not p.requires_grad
-    )
+    # hparams["model/params/total"] = sum(p.numel() for p in model.parameters())
+    # hparams["model/params/trainable"] = sum(
+    #     p.numel() for p in model.parameters() if p.requires_grad
+    # )
+    # hparams["model/params/non_trainable"] = sum(
+    #     p.numel() for p in model.parameters() if not p.requires_grad
+    # )
+    hparams['lightning_model'] = config['lightning_model']
+
 
     hparams["datamodule"] = config["datamodule"]
     hparams["trainer"] = config["trainer"]

@@ -10,7 +10,7 @@ from torchmetrics import MaxMetric, MeanMetric
 from torchmetrics.classification.accuracy import Accuracy
 
 
-class FlowModel(pl.LightningModule):
+class VAEModel(pl.LightningModule):
 
 
     def __init__(
@@ -19,13 +19,17 @@ class FlowModel(pl.LightningModule):
         *args,
         **kwargs
     ) -> None:
-        super(FlowModel, self).__init__()
+        super(VAEModel, self).__init__()
 
         # this line allows to access init params with 'self.hparams' attribute
         # also ensures init params will be stored in ckpt
         self.save_hyperparameters(logger=False)
 
-        self.flow = hydra.utils.instantiate(self.hparams.flow)
+        self.vae = hydra.utils.instantiate(self.hparams.model)
+
+
+    def criterion(self, )
+
 
     def configure_optimizers(
             self,

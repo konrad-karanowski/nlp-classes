@@ -3,3 +3,12 @@ _target_: nlp.models.flows.cmaf.cMAF
 hidden_features: ${datamodule.num_classes}
 features: ${datamodule.num_classes}
 context_features: ${datamodule.embedding_dim}
+
+num_layers: 4
+num_blocks_per_layer: 3
+use_random_permutations: true
+use_residual_blocks: false
+use_random_masks: true
+dropout_probability: 0.0
+batch_norm_within_layers: false
+batch_norm_between_layers: false

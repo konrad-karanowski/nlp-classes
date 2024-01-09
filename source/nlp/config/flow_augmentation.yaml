@@ -12,7 +12,7 @@ defaults:
   # ===================================================================================
   # CORE - core things for the project such as paths, hydra behaviour, logger etc
   # ===================================================================================
-  - core: default
+  - core: augmentation_experiment
   - hydra: default
   - paths: default
   - logger: wandb
@@ -31,7 +31,7 @@ defaults:
   # MODEL - model related configs
   # ===================================================================================
   - lightning_model: flow_augmentation_model
-  - flow_model: cnice
+  - flow_augmentation_model: cnice
 
   # ===================================================================================
   # training related

@@ -1,10 +1,10 @@
 _target_: nlp.models.flows.creal_nvp.cRealNVP
 
-hidden_features: ${datamodule.num_classes}
-features: ${datamodule.num_classes}
-context_features: ${datamodule.embedding_dim}
+hidden_features: ${datamodule.embedding_dim}
+features: ${datamodule.embedding_dim}
+context_features: ${datamodule.num_classes}
 
-num_layers: 10
+num_layers: 8
 num_blocks_per_layer: 2
 dropout_probability: 0.0
 batch_norm_within_layers: false

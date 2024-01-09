@@ -59,7 +59,8 @@ class FlowAugmentationModel(pl.LightningModule):
         self, batch: Tuple[torch.Tensor, torch.Tensor]
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         x, y = batch['x'], batch['y']
-        loss = - self.flow.log_prob(inputs=x.float(), context=y).mean()
+        y = torch.nn.functional.one_hot(y, self.hparams.num_classes).float()
+        loss = - self.flow.log_prob(inputs=x, context=y).mean()
         return loss
 
 
@@ -87,7 +88,7 @@ class FlowAugmentationModel(pl.LightningModule):
         loss = self._shared_step(batch)
 
         # update and log metrics
-        self.log("train/loss", loss, on_step=False, on_epoch=True, prog_bar=True)
+        self.log("test/loss", loss, on_step=False, on_epoch=True, prog_bar=True)
 
         # return loss or backpropagation will fail
         return loss

@@ -12,7 +12,7 @@ defaults:
   # ===================================================================================
   # CORE - core things for the project such as paths, hydra behaviour, logger etc
   # ===================================================================================
-  - core: default
+  - core: uncertainty_experiment
   - hydra: default
   - paths: default
   - logger: wandb

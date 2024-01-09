@@ -32,6 +32,7 @@ def train(config: DictConfig) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     if config.get("seed"):
         pl.seed_everything(config.seed, workers=True)
 
+
     logger.info(f"Instantiating datamodule <{config.datamodule._target_}>")
     datamodule: LightningDataModule = hydra.utils.instantiate(config.datamodule, _recursive_=False)
 

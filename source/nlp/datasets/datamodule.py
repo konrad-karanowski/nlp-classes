@@ -49,7 +49,8 @@ class TextDataset(Dataset):
 
         return {
             'x': x.view(-1),
-            'y': y
+            'y': y,
+            'text': sample.text
         }
 
 

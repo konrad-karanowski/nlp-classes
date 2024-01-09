@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Optional
 
 import torch
 from torch.nn import functional as F
@@ -16,7 +16,7 @@ class cNICE(Flow):
             self,
             features: int,
             hidden_features: int,
-            context_features: int, 
+            context_features: Optional[int] = None, 
             base_distribution=StandardNormal,
             num_layers: int = 2,
             num_blocks_per_layer: int = 2,
