@@ -1,0 +1,6 @@
+_target_: nlp.augmenters.flow_augmenter.FlowAugmenter
+
+perc_time: 0.2
+alpha: 0.01
+num_classes: ${datamodule.num_classes}
+checkpoint_path: "${paths.storage_dir}/outputs/flow_augmentation/runs/2024-01-09_20-33-26/checkpoints/epoch_001.ckpt"

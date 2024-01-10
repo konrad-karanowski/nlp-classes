@@ -26,6 +26,7 @@ defaults:
   # DATASET - dataset related config
   # ===================================================================================
   - datamodule: herbert
+  - augmenters: none
 
   # ===================================================================================
   # MODEL - model related configs

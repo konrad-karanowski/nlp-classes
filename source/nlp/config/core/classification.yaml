@@ -1,0 +1,9 @@
+# this is "project metadata"
+
+project_name: nlp_normalizing_flows_classification
+tags: ['final']
+group: 'augmentations'
+version: 1.0
+
+# seed for easy reproducebility
+seed:  2137

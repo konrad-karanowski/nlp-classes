@@ -27,6 +27,8 @@ class Classifier(pl.LightningModule):
 
         self.model = hydra.utils.instantiate(self.hparams.model)
 
+        self.augmenter = hydra.utils.instantiate(self.hparams.augmenter, device=self.device)
+
         # loss function
         self.criterion = torch.nn.CrossEntropyLoss()
 
@@ -65,6 +67,17 @@ class Classifier(pl.LightningModule):
                 }
             return {'optimizer': optimizer, 'lr_scheduler': scheduler}
     
+    def to(self, *args, **kwargs) -> None:
+        """This is required to save GPU memory (not putting VAE on CUDA if not specified to)
+        """
+        super().to(*args, **kwargs)
+        self.augmenter.flow.to(self.device)
+        
+    def cuda(self) -> None:
+        super().cuda()
+        self.augmenter.flow.to(self.device)
+
+
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.model(x)
 
@@ -75,9 +88,14 @@ class Classifier(pl.LightningModule):
 
 
     def _shared_step(
-        self, batch: Tuple[torch.Tensor, torch.Tensor]
+        self, 
+        batch: Tuple[torch.Tensor, torch.Tensor],
+        train: bool = False
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         x, y = batch['x'], batch['y']
+
+        if train:
+            x = self.augmenter(x, y)
         logits = self.forward(x)
         loss = self.criterion(logits, y)
         preds = torch.argmax(logits, dim=1)
@@ -87,7 +105,7 @@ class Classifier(pl.LightningModule):
     def training_step(
         self, batch: Tuple[torch.Tensor, torch.Tensor], batch_idx: int
     ) -> torch.Tensor:
-        loss, preds, targets = self._shared_step(batch)
+        loss, preds, targets = self._shared_step(batch, train=True)
 
         # update and log metrics
         self.train_loss(loss)

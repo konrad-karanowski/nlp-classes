@@ -39,6 +39,9 @@ def log_hyperparameters(object_dict: Dict[str, Any]) -> None:
     elif 'flow_augmentation_model' in config.keys():
         hparams["flow"] = config.get("flow_augmentation_model")
 
+    if 'augmenters' in config.keys():
+        hparams['augmenters'] = config.get('augmenters')
+
 
     # log lightning model
     # save number of model parameters

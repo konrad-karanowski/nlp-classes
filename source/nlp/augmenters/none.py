@@ -7,5 +7,5 @@ class NoneAugmenter:
     def __init__(self, *args, **kwargs) -> None:
         pass
 
-    def augment(self, x: torch.Tensor) -> torch.Tensor:
+    def __call__(self, x: torch.Tensor) -> torch.Tensor:
         return x

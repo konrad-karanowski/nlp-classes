@@ -3,6 +3,8 @@ _target_: nlp.lightning_model.classifier.Classifier
 
 num_classes: ${datamodule.num_classes}
 
+augmenter: ${augmenters}
+
 
 model: 
   _target_: nlp.models.net.Net
