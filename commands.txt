@@ -1,0 +1,36 @@
+
+
+
+python3 -m nlp.experiments.flow_uncertainty flow_model=cnice hparams_search=uncertainty_cnice
+
+
+# grid search uncertainty
+python3 -m nlp.experiments.flow_uncertainty callbacks=param_search flow_model=cmaf hparams_search=uncertainty_cmaf_optuna core.group='uncertainty_grid_search'
+python3 -m nlp.experiments.flow_uncertainty callbacks=param_search flow_model=cnice hparams_search=uncertainty_cnice_optuna core.group='uncertainty_grid_search'
+python3 -m nlp.experiments.flow_uncertainty callbacks=param_search flow_model=creal_nvp hparams_search=uncertainty_crealnvp_optuna core.group='uncertainty_grid_search'
+
+# best models uncertainty
+python3 -m nlp.experiments.flow_uncertainty flow_model=cmaf core.group='uncertainty_best_params_deterministic'
+python3 -m nlp.experiments.flow_uncertainty flow_model=cnice core.group='uncertainty_best_params_deterministic'
+python3 -m nlp.experiments.flow_uncertainty flow_model=creal_nvp core.group='uncertainty_best_params_deterministic'
+
+# grid search augmentation
+python3 -m nlp.experiments.flow_augmentation flow_augmentation_model=cnice hparams_search=augmentation_cnice_optuna core.group='augmentation_grid_search' callbacks=param_search
+python3 -m nlp.experiments.flow_augmentation flow_augmentation_model=cmaf hparams_search=augmentation_cmaf_optuna core.group='augmentation_grid_search' callbacks=param_search
+python3 -m nlp.experiments.flow_augmentation flow_augmentation_model=creal_nvp hparams_search=augmentation_crealnvp_optuna core.group='augmentation_grid_search' callbacks=param_search
+
+# best models augmentation
+python3 -m nlp.experiments.flow_augmentation flow_augmentation_model=cnice core.group='augmentation_best_params_deterministic'
+python3 -m nlp.experiments.flow_augmentation flow_augmentation_model=cmaf core.group='augmentation_best_params_deterministic'
+
+
+# augmentation experiments
+# nice
+python3 -m nlp.experiments.classification augmenters=flow hparams_search=classification_optuna core=classification callbacks=param_search_classification augmenters.checkpoint_path='/home/konradkaranowski/nlp-classes/storage/nlp/outputs/flow_augmentation/runs/2024-01-09_20-33-26/checkpoints/epoch_001.ckpt' core.group='NICE'
+# maf
+python3 -m nlp.experiments.classification augmenters=flow hparams_search=classification_optuna core=classification callbacks=param_search_classification augmenters.checkpoint_path='/home/konradkaranowski/nlp-classes/storage/nlp/outputs/flow_augmentation/runs/2024-01-09_20-33-48/checkpoints/epoch_001.ckpt' core.group='MAF'
+# rnvp
+python3 -m nlp.experiments.classification augmenters=flow hparams_search=classification_optuna core=classification callbacks=param_search_classification augmenters.checkpoint_path='/home/konradkaranowski/nlp-classes/storage/nlp/outputs/flow_augmentation/runs/2024-01-09_20-34-01/checkpoints/epoch_007.ckpt' core.group='REAL_NVP'
+
+# accuracy bez augmentacji
+0.53992
